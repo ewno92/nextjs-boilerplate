@@ -14,8 +14,9 @@ const authRoutes = require("./routes/auth");
 const app = express();
 
 //db
+mongoose.set("useCreateIndex", true);
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(process.env.DATABASE_CLOUD, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

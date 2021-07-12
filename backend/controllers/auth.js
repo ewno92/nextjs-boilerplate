@@ -56,7 +56,7 @@ exports.signin = (req, res) => {
     const { _id, username, name, email, role } = user;
     return res.json({
       token,
-      user,
+      user: { _id, username, name, email, role },
     });
   });
   // generate a token and send to client

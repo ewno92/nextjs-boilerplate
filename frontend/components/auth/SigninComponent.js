@@ -1,12 +1,11 @@
 import react from "react";
 import { useState } from "react";
 import { signin } from "../../actions/auth";
-import Button from "react-bootstrap/Button";
+import Router from "next/router";
 import Form from "react-bootstrap/Form";
-import { flushSync } from "react-dom";
+import Button from "react-bootstrap/Button";
 const SigninComponent = () => {
   const [values, setValues] = useState({
-    name: "",
     email: "",
     password: "",
     error: "",
@@ -15,32 +14,26 @@ const SigninComponent = () => {
     showForm: true,
   });
 
-  const { name, email, password, error, loading, message, showForm } = values;
+  const { email, password, error, loading, message, showForm } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("handle submit");
 
     setValues({ ...values, loading: true, error: false });
-    const user = { name, email, password };
+    const user = { email, password };
 
     signin(user).then((data) => {
       if (data.error) {
         setValues({ ...values, error: data.error, loading: false });
       } else {
-        setValues({
-          ...values,
-          name: "",
-          email: "",
-          password: "",
-          error: "",
-          loading: false,
-          message: data.message,
-          showForm: false,
-        });
+        //save user token to cookie
+        //save user info to localstorage
+        // authenticate user
+        Router.push(`/`);
       }
     });
-    console.table({ name, email, password, error, loading, message, showForm });
+    console.table({ email, password, error, loading, message, showForm });
   };
 
   const handleChange = (name) => (e) => {
@@ -55,17 +48,10 @@ const SigninComponent = () => {
   const showMessage = () =>
     message ? <div className="alert alert-info">{message}</div> : "";
 
-  const signupform = () => {
+  const signinform = () => {
     return (
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
-          <Form.Control
-            value={name}
-            onChange={handleChange("name")}
-            type="text"
-            className="form-control mb-2"
-            placeholder="Type your name"
-          />
           <div className="formGroup">
             <input
               value={email}
@@ -86,7 +72,7 @@ const SigninComponent = () => {
           </div>
         </Form.Group>
 
-        <Button onClick={handleSubmit}>Signup</Button>
+        <Button onClick={handleSubmit}>Sign in</Button>
       </Form>
     );
   };
@@ -97,7 +83,7 @@ const SigninComponent = () => {
       {showLoading()}
       {showMessage()}
 
-      {showForm && signupform()}
+      {showForm && signinform()}
     </>
   );
 };

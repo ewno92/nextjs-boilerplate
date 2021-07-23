@@ -1,6 +1,6 @@
 import react from "react";
 import { useState } from "react";
-import { signin } from "../../actions/auth";
+import { signin, authenticate } from "../../actions/auth";
 import Router from "next/router";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -30,7 +30,9 @@ const SigninComponent = () => {
         //save user token to cookie
         //save user info to localstorage
         // authenticate user
-        Router.push(`/`);
+        authenticate(data, () => {
+          Router.push(`/`);
+        });
       }
     });
     console.table({ email, password, error, loading, message, showForm });

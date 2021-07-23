@@ -2,6 +2,7 @@ import react from "react";
 import { useState } from "react";
 import { signup } from "../../actions/auth";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import { flushSync } from "react-dom";
 const SignupComponent = () => {
   const [values, setValues] = useState({
@@ -47,39 +48,58 @@ const SignupComponent = () => {
     console.log(e.target.value);
   };
 
+  const showLoading = () =>
+    loading ? <div className="alert alert-info">Loading...</div> : "";
+  const showError = () =>
+    error ? <div className="alert alert-danger">{error}</div> : "";
+  const showMessage = () =>
+    message ? <div className="alert alert-info">{message}</div> : "";
+
   const signupform = () => {
     return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <input
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Control
             value={name}
             onChange={handleChange("name")}
             type="text"
-            className="form-control"
+            className="form-control mb-2"
             placeholder="Type your name"
           />
-          <input
-            value={email}
-            onChange={handleChange("email")}
-            type="email"
-            className="form-control"
-            placeholder="Type your email"
-          />
-          <input
-            value={password}
-            onChange={handleChange("password")}
-            type="password"
-            className="form-control"
-            placeholder="Type your password"
-          />
+          <div className="formGroup">
+            <input
+              value={email}
+              onChange={handleChange("email")}
+              type="email"
+              className="form-control mb-2"
+              placeholder="Type your email"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              value={password}
+              onChange={handleChange("password")}
+              type="password"
+              className="form-control mb-2"
+              placeholder="Type your password"
+            />
+          </div>
+        </Form.Group>
 
-          <Button onClick={handleSubmit}>Signup</Button>
-        </div>
-      </form>
+        <Button onClick={handleSubmit}>Signup</Button>
+      </Form>
     );
   };
 
-  return <div>{signupform()}</div>;
+  return (
+    <>
+      {showError()}
+      {showLoading()}
+      {showMessage()}
+
+      {showForm && signupform()}
+    </>
+  );
 };
 
 export default SignupComponent;

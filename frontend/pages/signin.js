@@ -1,11 +1,18 @@
 import React from "react";
 import Link from "next/link";
+import SigninComponent from "../components/auth/SigninComponent";
+import { Col, Row, Container } from "react-bootstrap";
 
 const Signin = () => {
   return (
-    <div>
-      <Link href="/signout">sign in page</Link>
-    </div>
+    <Container>
+      <h2 className="text-center py-4">Sign In</h2>
+      <Row>
+        <Col className="col-md-6 offset-md-3">
+          <SigninComponent />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -1,13 +1,17 @@
 import react from "react";
-import { useState } from "react";
-import { signin, authenticate } from "../../actions/auth";
+import { useState, useEffect } from "react";
+import { signin, authenticate, isAuth } from "../../actions/auth";
 import Router from "next/router";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 const SigninComponent = () => {
+  useEffect(() => {
+    isAuth() && Router.push("/");
+  }, []);
+
   const [values, setValues] = useState({
-    email: "",
-    password: "",
+    email: "red@gmail.com",
+    password: "fdsjkl",
     error: "",
     loading: false,
     message: "",
@@ -18,7 +22,7 @@ const SigninComponent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("handle submit");
+    // console.log("handle submit");
 
     setValues({ ...values, loading: true, error: false });
     const user = { email, password };
@@ -35,7 +39,7 @@ const SigninComponent = () => {
         });
       }
     });
-    console.table({ email, password, error, loading, message, showForm });
+    // console.table({ email, password, error, loading, message, showForm });
   };
 
   const handleChange = (name) => (e) => {

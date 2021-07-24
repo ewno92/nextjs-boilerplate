@@ -1,7 +1,12 @@
 import React from "react";
 import { Navbar, Container, Nav, NavDropdown, NavLink } from "react-bootstrap";
 import { APP_NAME } from "../config";
-import Link from "next/link";
+import Router from "next/router";
+
+// import Link from "next/link";
+
+import { signout, isAuth } from "../actions/auth";
+// import router, { Router } from "next/dist/client/router";
 
 const Header = () => {
   return (
@@ -12,10 +17,10 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Link href="/signin">Sign In</Link>
               <Nav.Link href="#link">Link</Nav.Link>
               <NavLink href="#link">Link</NavLink>
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+
+              {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
@@ -27,7 +32,24 @@ const Header = () => {
                 <NavDropdown.Item href="#action/3.4">
                   Separated link
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
+            </Nav>
+            <Nav>
+              {/* {JSON.stringify(isAuth().name)} */}
+
+              {!isAuth() && (
+                <div>
+                  <NavLink href="/signup">Sign up</NavLink>
+                </div>
+              )}
+
+              {isAuth() ? (
+                <NavLink onClick={() => signout(() => Router.push(`/`))}>
+                  Sign Out
+                </NavLink>
+              ) : (
+                <NavLink href="/signin">Sign In</NavLink>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

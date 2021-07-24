@@ -1,10 +1,14 @@
 import react from "react";
-import { useState } from "react";
-import { signup } from "../../actions/auth";
+import { useState, useEffect } from "react";
+import { signup, isAuth } from "../../actions/auth";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { flushSync } from "react-dom";
+import Router from "next/router";
 const SignupComponent = () => {
+  useEffect(() => {
+    isAuth && Router.push("/");
+  }, []);
+
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -57,7 +61,7 @@ const SignupComponent = () => {
 
   const signupform = () => {
     return (
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <Form.Group className="mb-3">
           <Form.Control
             value={name}
@@ -96,7 +100,6 @@ const SignupComponent = () => {
       {showError()}
       {showLoading()}
       {showMessage()}
-
       {showForm && signupform()}
     </>
   );

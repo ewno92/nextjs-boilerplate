@@ -36,11 +36,14 @@ const Header = () => {
             </Nav>
             <Nav>
               {/* {JSON.stringify(isAuth().name)} */}
+              {!isAuth() && <NavLink href="/signup">Sign up</NavLink>}
 
-              {!isAuth() && (
-                <div>
-                  <NavLink href="/signup">Sign up</NavLink>
-                </div>
+              {/* //Dashboard */}
+              {isAuth() && isAuth().role == 0 && (
+                <NavLink href="/user">Dashboard</NavLink>
+              )}
+              {isAuth() && isAuth().role == 1 && (
+                <NavLink href="/admin">Dashboard</NavLink>
               )}
 
               {isAuth() ? (

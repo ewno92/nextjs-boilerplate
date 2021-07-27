@@ -1,14 +1,15 @@
 const express = require("express");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
+const morgan = require("morgan"); //http log
+const bodyParser = require("body-parser"); //parser request middleware
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
+const cors = require("cors"); //get, put, post
 const mongoose = require("mongoose");
 require("dotenv").config();
 
 //bring routes
 const blogRoutes = require("./routes/blog");
 const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 
 // app
 const app = express();
@@ -25,6 +26,7 @@ mongoose
 
 // middlewares
 app.use(morgan("dev"));
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 
@@ -57,6 +59,7 @@ if (process.env.NODE_ENV == "development") {
 //routes middleware
 app.use("/api", blogRoutes);
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 
 // // routes
 // app.get("/api", (req, res) => {

@@ -6,20 +6,30 @@ import Form from "react-bootstrap/Form";
 import Router from "next/router";
 const SignupComponent = () => {
   useEffect(() => {
-    isAuth && Router.push("/");
+    isAuth() && Router.push("/");
   }, []);
 
   const [values, setValues] = useState({
     name: "",
     email: "",
     password: "",
+    checkPassword: "",
     error: "",
     loading: false,
     message: "",
     showForm: true,
   });
 
-  const { name, email, password, error, loading, message, showForm } = values;
+  const {
+    name,
+    email,
+    password,
+    checkPassword,
+    error,
+    loading,
+    message,
+    showForm,
+  } = values;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,23 +38,42 @@ const SignupComponent = () => {
     setValues({ ...values, loading: true, error: false });
     const user = { name, email, password };
 
-    signup(user).then((data) => {
-      if (data.error) {
-        setValues({ ...values, error: data.error, loading: false });
-      } else {
-        setValues({
-          ...values,
-          name: "",
-          email: "",
-          password: "",
-          error: "",
-          loading: false,
-          message: data.message,
-          showForm: false,
-        });
-      }
-    });
-    console.table({ name, email, password, error, loading, message, showForm });
+    if (password == checkPassword) {
+      signup(user).then((data) => {
+        if (data.error) {
+          setValues({ ...values, error: data.error, loading: false });
+        } else {
+          setValues({
+            ...values,
+            name: "",
+            email: "",
+            password: "",
+            checkPassword: "",
+            error: "",
+            loading: false,
+            message: data.message,
+            showForm: false,
+          });
+        }
+      });
+      console.table({
+        name,
+        email,
+        password,
+        checkPassword,
+        error,
+        loading,
+        message,
+        showForm,
+      });
+    } else {
+      setValues({
+        ...values,
+        error: "password does not match",
+        message: "",
+        loading: false,
+      });
+    }
   };
 
   const handleChange = (name) => (e) => {
@@ -86,6 +115,15 @@ const SignupComponent = () => {
               type="password"
               className="form-control mb-2"
               placeholder="Type your password"
+            />
+          </div>
+          <div className="form-group">
+            <input
+              value={checkPassword}
+              onChange={handleChange("checkPassword")}
+              type="password"
+              className="form-control mb-2"
+              placeholder="Type your password "
             />
           </div>
         </Form.Group>

@@ -1,0 +1,21 @@
+# POST http://localhost:8000/api/signin HTTP/1.1
+# content-type: application/json
+
+# {
+# "email": "red@gmail.com",
+# "password": "fdsjkl"
+# }
+
+POST http://localhost:8000/api/category HTTP/1.1
+content-type: application/json
+
+{
+"name": "user@gmail.com",
+"password": "fdsjkl"
+}
+
+# GET http://localhost:8000/api/signout HTTP/1.1
+# content-type: application/json
+
+# {
+# }

@@ -2,16 +2,11 @@ import React from "react";
 import { Navbar, Container, Nav, NavDropdown, NavLink } from "react-bootstrap";
 import { APP_NAME } from "../config";
 import Router from "next/router";
-import NProgress from "nprogress"; //progress bar
 
 // import Link from "next/link";
 
 import { signout, isAuth } from "../actions/auth";
 // import router, { Router } from "next/dist/client/router";
-
-Router.onRouteChangeStart = (url) => NProgress.start();
-Router.onRouteChangeStartComplete = (url) => NProgress.done();
-Router.onRouteChangeError = (url) => NProgress.done();
 
 const Header = () => {
   return (

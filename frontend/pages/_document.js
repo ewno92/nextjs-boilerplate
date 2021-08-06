@@ -10,11 +10,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head />
-        <script src="nprogress.js"></script>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
-        />
+
         <body>
           <Main />
           <NextScript />

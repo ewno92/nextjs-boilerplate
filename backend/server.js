@@ -25,14 +25,6 @@ mongoose
     useFindAndModify: false,
   })
   .then(() => console.log("DB connected"));
-
-// middlewares
-app.use(morgan("dev"));
-
-app.use(bodyParser.json());
-app.use(cookieParser());
-
-//
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
@@ -48,23 +40,60 @@ app.use((req, res, next) => {
   next();
 });
 
-// cors
-if (process.env.NODE_ENV == "development") {
-  app.use(
-    cors({
-      origin: `${process.env.CLIENT_URL}`,
-      credentials: true,
-      optionsSuccessStatus: 200,
-    })
-  );
-}
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    optionsSuccessStatus: 200,
+  })
+);
+
+// middlewares
+app.use(morgan("dev"));
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+//
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Credentials", true);
+//   res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+//   );
+//   // if ('OPTIONS' == req.method) {
+//   //      res.sendStatus(200);
+//   // } else {
+//   // }
+//   next();
+// });
+
+// // cors
+// if (process.env.NODE_ENV == "development") {
+//   app.use(
+//     cors({
+//       // origin: `${process.env.CLIENT_URL}`,
+//       origin: `*`,
+//       // methods: ["GET", "POST"],
+
+//       credentials: true,
+//       optionsSuccessStatus: 204,
+
+//       preflightContinue: false,
+//       allowedHeaders: ["sessionId", "Content-Type", "Authorization"],
+//       exposedHeaders: ["sessionId"],
+//       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     })
+//   );
+// }
 //routes middleware
 app.use("/api", blogRoutes);
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", tagRoutes);
-
 // // routes
 // app.get("/api", (req, res) => {
 //   res.json({ time: Date().toString() });

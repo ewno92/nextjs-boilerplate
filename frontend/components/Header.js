@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar, Container, Nav, NavDropdown, NavLink } from "react-bootstrap";
 import { APP_NAME } from "../config";
 import Router from "next/router";
+import Link from "next/link";
 
 // import Link from "next/link";
 
@@ -36,14 +37,18 @@ const Header = () => {
             </Nav>
             <Nav>
               {/* {JSON.stringify(isAuth().name)} */}
-              {!isAuth() && <NavLink href="/signup">Sign up</NavLink>}
+              {/* {!isAuth() && <NavLink href="/signup">Sign up</NavLink>} */}
 
               {/* //Dashboard */}
               {isAuth() && isAuth().role == 0 && (
-                <NavLink href="/user">Dashboard</NavLink>
+                <Link href="/user">
+                  <a className="nav-link">Dashboard</a>
+                </Link>
               )}
               {isAuth() && isAuth().role == 1 && (
-                <NavLink href="/admin">Dashboard</NavLink>
+                <Link href="/admin">
+                  <a className="nav-link">Dashboard</a>
+                </Link>
               )}
 
               {isAuth() ? (

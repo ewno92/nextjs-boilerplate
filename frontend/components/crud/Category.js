@@ -88,6 +88,7 @@ const Category = () => {
           name: "",
           removed: removed,
           reload: !reload,
+          //
         });
       }
     });

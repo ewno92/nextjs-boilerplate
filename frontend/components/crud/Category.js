@@ -17,61 +17,61 @@ const Category = () => {
   const { name, error, success, categories, removed, reload } = values;
   const token = getCookie("token");
 
-  // useEffect(() => {
-  //   loadCategories();
-  // }, [reload]);
+  useEffect(() => {
+    loadCategories();
+  }, [reload]);
 
-  // const loadCategories = () => {
-  //   getCategories().then((data) => {
-  //     if (data.error) {
-  //       console.log(data.error);
-  //     } else {
-  //       setValues({ ...values, categories: data });
-  //     }
-  //   });
-  // };
+  const loadCategories = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValues({ ...values, categories: data });
+      }
+    });
+  };
 
-  // const showCategories = () => {
-  //   return categories.map((c, i) => {
-  //     return (
-  //       <button
-  //         onDoubleClick={() => deleteConfirm(c.slug)}
-  //         title="Double click to delete"
-  //         key={i}
-  //         className="btn btn-outline-primary mr-1 ml-1 mt-3"
-  //       >
-  //         {c.name}
-  //       </button>
-  //     );
-  //   });
-  // };
+  const showCategories = () => {
+    return categories.map((c, i) => {
+      return (
+        <button
+          className="btn btn-outline-primary mr-2 ml-1 mt-3"
+          onDoubleClick={() => deleteConfirm(c.slug)}
+          title="Double click to delete"
+          key={i}
+        >
+          {c.name}
+        </button>
+      );
+    });
+  };
 
-  // const deleteConfirm = (slug) => {
-  //   let answer = window.confirm(
-  //     "Are you sure you want to delete this category?"
-  //   );
-  //   if (answer) {
-  //     deleteCategory(slug);
-  //   }
-  // };
+  const deleteConfirm = (slug) => {
+    let answer = window.confirm(
+      "Are you sure you want to delete this category?"
+    );
+    if (answer) {
+      deleteCategory(slug);
+    }
+  };
 
-  // const deleteCategory = (slug) => {
-  //   // console.log('delete', slug);
-  //   removeCategory(slug, token).then((data) => {
-  //     if (data.error) {
-  //       console.log(data.error);
-  //     } else {
-  //       setValues({
-  //         ...values,
-  //         error: false,
-  //         success: false,
-  //         name: "",
-  //         removed: !removed,
-  //         reload: !reload,
-  //       });
-  //     }
-  //   });
-  // };
+  const deleteCategory = (slug) => {
+    // console.log('delete', slug);
+    removeCategory(slug, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValues({
+          ...values,
+          error: false,
+          success: false,
+          name: "",
+          removed: !removed,
+          reload: !reload,
+        });
+      }
+    });
+  };
 
   const clickSubmit = (e) => {
     e.preventDefault();
@@ -84,9 +84,9 @@ const Category = () => {
         setValues({
           ...values,
           error: false,
-          success: false,
+          success: true,
           name: "",
-          removed: !removed,
+          removed: removed,
           reload: !reload,
         });
       }
@@ -152,7 +152,7 @@ const Category = () => {
       {showRemoved()}
       <div onMouseMove={mouseMoveHandler}>
         {newCategoryFom()}
-        {/* {showCategories()} */}
+        {showCategories()}
       </div>
     </>
   );
